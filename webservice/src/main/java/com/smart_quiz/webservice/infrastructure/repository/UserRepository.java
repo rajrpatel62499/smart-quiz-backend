@@ -1,5 +1,6 @@
 package com.smart_quiz.webservice.infrastructure.repository;
 
+
 import org.springframework.stereotype.Repository;
 
 import com.smart_quiz.webservice.infrastructure.entity.UserEntity;

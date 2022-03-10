@@ -53,6 +53,7 @@ class UserController {
         try {
             List<UserEntity> items = new ArrayList<UserEntity>();
 
+            System.out.println("Raj changed the code in urvish laptop");
             repository.findAll().forEach(items::add);
 
             if (items.isEmpty())
