@@ -1,7 +1,6 @@
 package com.smart_quiz.webservice.app.services.impl;
 
 import com.smart_quiz.webservice.infrastructure.entity.QuestionEntity;
-import com.smart_quiz.webservice.infrastructure.entity.UserEntity;
 import com.smart_quiz.webservice.infrastructure.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ public class QuestionService {
     public ResponseEntity<List<QuestionEntity>> getAll() {
         try {
             List<QuestionEntity> items = new ArrayList<QuestionEntity>();
-
 
             questionRepository.findAll().forEach(items::add);
 
@@ -43,7 +41,7 @@ public class QuestionService {
         }
     }
 
-    public ResponseEntity<QuestionEntity> update(Long id,QuestionEntity item) {
+    public ResponseEntity<QuestionEntity> update(Long id, QuestionEntity item) {
         Optional<QuestionEntity> existingItemOptional = questionRepository.findById(id);
         if (existingItemOptional.isPresent()) {
             QuestionEntity existingItem = existingItemOptional.get();
@@ -66,5 +64,4 @@ public class QuestionService {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
-    }
-
+}
