@@ -26,13 +26,7 @@ public class UserPrincipal implements UserDetails {
     @NonNull private String email;
     @NonNull private String password;
     @NonNull private Collection<? extends GrantedAuthority> authorities;
-     private Map<String, Object> attributes;
-
-
-//    public UserPrincipal(Long id, String username, String firstName, String lastName, String email, String password, List<GrantedAuthority> authorities) {
-//
-//    }
-
+    private Map<String, Object> attributes;
 
     public static UserPrincipal create(UserEntity user) {
         List<GrantedAuthority> authorities = Stream.of(user.getRole())
@@ -85,4 +79,5 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
