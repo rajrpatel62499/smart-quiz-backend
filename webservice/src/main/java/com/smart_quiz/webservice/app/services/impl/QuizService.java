@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuizService {
@@ -37,6 +38,31 @@ public class QuizService {
         }
         catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    public ResponseEntity<HttpStatus> deleteQuizEntity(Long id) {
+        try{
+           quizRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    public ResponseEntity<QuizEntity> putQuizEntity(Long id, QuizEntity item) {
+        Optional<QuizEntity> existingQuizEntity = quizRepository.findById(id);
+        if(existingQuizEntity.isPresent()){
+            QuizEntity existingQuizItem = existingQuizEntity.get();
+            existingQuizItem = item;
+         
+            existingQuizItem.setId(id);
+            return new ResponseEntity<>(quizRepository.save(existingQuizItem),HttpStatus.OK);
+
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
