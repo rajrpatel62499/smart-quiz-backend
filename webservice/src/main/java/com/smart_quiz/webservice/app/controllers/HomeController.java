@@ -20,9 +20,9 @@ public class HomeController {
     @GetMapping("/")
     public String greet() {
 
-        UserPrincipal principal = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
-        return "Hello " + username ;
+        return "Hello " + "world";
     }
 
 }
