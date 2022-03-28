@@ -1,6 +1,8 @@
 package com.smart_quiz.webservice.infrastructure.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -72,4 +76,17 @@ public class UserEntity {
     @Column(length = 10)
     private UsernameType usernameType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10)
+    private Gender gender;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfBirth;
+
+    @ManyToMany(mappedBy = "users")
+    @OrderBy(value = "id asc")
+    private Set<QuestionEntity> questions = new HashSet<>();
+
+    @Column(length = 500)
+    private String deviceToken;
 }
