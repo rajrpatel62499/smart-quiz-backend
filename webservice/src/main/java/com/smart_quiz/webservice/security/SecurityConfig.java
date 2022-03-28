@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                 .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/swagger-ui**").permitAll()

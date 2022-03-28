@@ -1,7 +1,5 @@
 package com.smart_quiz.webservice.security;
 
-import com.smart_quiz.webservice.infrastructure.entity.UserEntity;
-import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,21 +10,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@RequiredArgsConstructor
-public class UserPrincipal implements UserDetails {
+import com.smart_quiz.webservice.infrastructure.entity.UserEntity;
 
-    @NonNull private Long id;
-    @NonNull private String username;
-    @NonNull private String firstName;
-    @NonNull private String lastName;
-    @NonNull private String email;
-    @NonNull private String password;
-    @NonNull private Collection<? extends GrantedAuthority> authorities;
+public class UserPrincipal implements UserDetails {
+    private Long id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
+
+    public UserPrincipal(Long id,
+            String username,
+            String email,
+            String password,
+            String firstName,
+            String lastName,
+            Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.authorities = authorities;
+    }
 
     public static UserPrincipal create(UserEntity user) {
         List<GrantedAuthority> authorities = Stream.of(user.getRole())
@@ -34,20 +44,27 @@ public class UserPrincipal implements UserDetails {
                 .collect(Collectors.toList());
 
         return new UserPrincipal(
-            user.getId(),
+                user.getId(),
                 user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities
-        );
+                user.getFirstName(),
+                user.getLastName(),
+                authorities);
     }
 
+    public static UserPrincipal create(UserEntity user, Map<String, Object> attributes) {
+        UserPrincipal userPrincipal = UserPrincipal.create(user);
+        userPrincipal.setAttributes(attributes);
+        return userPrincipal;
+    }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     @Override
@@ -58,6 +75,14 @@ public class UserPrincipal implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
@@ -80,4 +105,22 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    // @Override
+    // public Map<String, Object> getAttributes() {
+    // return this.attributes;
+    // }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    // @Override
+    // public String getName() {
+    // return String.valueOf(id);
+    // }
 }

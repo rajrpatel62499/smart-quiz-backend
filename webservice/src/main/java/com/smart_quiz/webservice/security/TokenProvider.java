@@ -2,17 +2,18 @@ package com.smart_quiz.webservice.security;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-import com.smart_quiz.webservice.global.constants.AppProperties;
-
 @Slf4j
 @Service
 public class TokenProvider {
 
+    @Autowired(required = true)
     private AppProperties appProperties;
 
     public TokenProvider(AppProperties appProperties) {
