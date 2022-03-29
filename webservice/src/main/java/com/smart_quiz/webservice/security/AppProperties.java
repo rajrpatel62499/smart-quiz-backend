@@ -1,22 +1,16 @@
 package com.smart_quiz.webservice.security;
 
-import javax.annotation.ManagedBean;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "app")
-@ManagedBean
 public class AppProperties {
-
-    public AppProperties() {
-
-    }
 
     private final Auth auth = new Auth();
 
     public static class Auth {
-        private String tokenSecret;
-        private long tokenExpirationMsec;
+        private String tokenSecret = "mySecret";
+        private long tokenExpirationMsec = 86400000L ;
 
         public String getTokenSecret() {
             return tokenSecret;

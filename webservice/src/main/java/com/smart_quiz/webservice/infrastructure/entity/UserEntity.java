@@ -86,7 +86,4 @@ public class UserEntity {
     @ManyToMany(mappedBy = "users")
     @OrderBy(value = "id asc")
     private Set<QuestionEntity> questions = new HashSet<>();
-
-    @Column(length = 500)
-    private String deviceToken;
 }
